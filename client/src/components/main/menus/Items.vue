@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import FoodCard from '@/components/menus/FoodCard'
+import FoodCard from '@/components/main/menus/FoodCard'
 
 export default {
   data() {

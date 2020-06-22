@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Category from '@/components/menus/Category.vue'
+import Category from '@/components/main/menus/Category.vue'
 
 export default {
   components: {

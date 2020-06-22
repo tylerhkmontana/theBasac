@@ -1,6 +1,6 @@
 <template>
   <v-toolbar class="mt-5 orange mx-auto" style="border-radius: 15px" dark max-width="1000px">
-    <v-slide-group show-arrows center-active>
+    <v-slide-group show-arrows>
       <v-slide-item>
         <v-btn color="transparent mx-10 white--text" depressed to="/menu/katsu" rounded>
           Katsu/Donbouri

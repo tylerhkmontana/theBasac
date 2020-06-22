@@ -12,7 +12,7 @@
         </v-row>
    
         <v-row>
-            <v-slide-group show-arrows="true">
+            <v-slide-group show-arrows>
               <v-slide-item>
                 <v-card class="black--text ma-5" height="70%" max-width="250" flat>
                   <v-img 
@@ -77,7 +77,7 @@
         </v-row>
    
         <v-row>
-          <v-slide-group show-arrows="true">
+          <v-slide-group show-arrows>
             <v-slide-item>
               <FoodCard :foodInfo="foodInfo" cardHeight="70%" cardWidth="250" imgHeight="170" />
             </v-slide-item>
@@ -126,7 +126,7 @@
 </template>
 
 <script>
-import FoodCard from '@/components/menus/FoodCard'
+import FoodCard from '@/components/main/menus/FoodCard'
 
 export default {
   data() {
