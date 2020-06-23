@@ -6,7 +6,7 @@ const Admin = require("../models/Admin")
 const jwtModules = require("../configs/jwt.config")
 
 router.get("/", (req, res) => {
-  res.send("Admin Controller")
+ 
 })
 
 router.post("/register", async (req, res) => {

@@ -1,68 +1,61 @@
 <template>
   <v-container style="width: 80vw">
-    <h1 class="white--text text-center">Menu Management</h1>
+    <h1 class="text-center white--text">Menu Management</h1>
+    <v-btn 
+      @click="logout" 
+      color="red accent-4" 
+      style="position: fixed; top: 60px; right: 60px;"
+      dark
+      depressed
+    >
+      LOG OUT
+    </v-btn>
     <v-row>
       <v-btn 
-        class="my-5 mx-auto white--text" 
+        class="my-5 mx-auto" 
+        color="red accent-4"
         @click="manageCategory = true"
-        color="white"
         outlined
-        >
-          MANAGE CATEGORY
-        </v-btn>
+      >
+        MANAGE CATEGORY
+      </v-btn>
     </v-row>
+
     <v-dialog v-model="manageCategory" max-width="600">
       <v-container class="white">
+        <p class="text-center red--text">{{ this.error }}</p>
         <v-row class="d-flex justify-center">
           <v-col cols="8">
-            <v-text-field color="orange" label="Category"></v-text-field>
+            <v-text-field color="orange" label="Category" autocomplete="off" v-model="newCategory"></v-text-field>
           </v-col>
           <v-col cols="2">
-            <v-btn class="white--text" color="orange" depressed>ADD</v-btn>
+            <v-btn class="white--text" color="orange" depressed outlined @click="addCategory">ADD</v-btn>
           </v-col>
         </v-row>
         <v-row class="d-flex justify-center">
           <v-col cols="8">
-            <v-select :items="categories" color="orange"></v-select>
+            <v-select :items="selectCategories" color="orange" v-model="selectedCategory"></v-select>
           </v-col>
           <v-col cols="2">
-            <v-btn class="white--text" color="orange" depressed>DELETE</v-btn>
+            <v-btn class="white--text" color="orange" depressed outlined @click="deleteCategory">DELETE</v-btn>
           </v-col>
         </v-row>
       </v-container>
     </v-dialog>
 
-    <v-toolbar style="border-radius: 10px; width: 80%; margin: auto;" flat>
+    <v-toolbar style="border-radius: 10px; width: 80%; margin: auto;" color="transparent" flat>
       <v-slide-group>
-        <v-slide-item>
-          <v-btn class="mx-2" color="orange" depressed outlined to="/admin/edit/katsu%20donbouri">katsu/donbouri</v-btn>
-        </v-slide-item>
-        <v-slide-item>
-          <v-btn class="mx-2" color="orange" depressed outlined>katsu/donbouri</v-btn>
-        </v-slide-item>
-        <v-slide-item>
-          <v-btn class="mx-2" color="orange" depressed outlined>katsu/donbouri</v-btn>
-        </v-slide-item>
-        <v-slide-item>
-          <v-btn class="mx-2" color="orange" depressed outlined>katsu/donbouri</v-btn>
-        </v-slide-item>
-        <v-slide-item>
-          <v-btn class="mx-2" color="orange" depressed outlined>katsu/donbouri</v-btn>
-        </v-slide-item>
-        <v-slide-item>
-          <v-btn class="mx-2" color="orange" depressed outlined>katsu/donbouri</v-btn>
-        </v-slide-item>
-        <v-slide-item>
-          <v-btn class="mx-2" color="orange" depressed outlined>katsu/donbouri</v-btn>
-        </v-slide-item>
-        <v-slide-item>
-          <v-btn class="mx-2" color="orange" depressed outlined>katsu/donbouri</v-btn>
-        </v-slide-item>
-        <v-slide-item>
-          <v-btn class="mx-2" color="orange" depressed outlined>katsu/donbouri</v-btn>
-        </v-slide-item>
-        <v-slide-item>
-          <v-btn class="mx-2" color="orange" depressed outlined>katsu/donbouri</v-btn>
+        <v-slide-item v-for="category in allCategories" :key="category._id">
+          <v-btn 
+            class="mx-2" 
+            depressed
+            dark
+            active-class="red accent-4"
+            :to="`/admin/edit/${category._id}`"
+            outlined
+          >
+            {{ category.categoryName }}
+          </v-btn>
         </v-slide-item>
       </v-slide-group>
     </v-toolbar>
@@ -72,11 +65,64 @@
 </template>
 
 <script>
+import menuService from "@/services/menu.service.js"
+
 export default {
   data() {
     return {
       manageCategory: false,
-      categories: ['katsu/donbouri', 'noodle', 'snack food']
+      categories: [],
+      newCategory: '',
+      selectedCategory: '',
+      errorMessage: ''
+    }
+  },
+  computed: {
+    error() {
+      return this.errorMessage
+    },
+    allCategories() {
+      return this.categories
+    },
+    selectCategories() {
+      return this.categories.map(m => (m.categoryName))
+    }
+  },
+  methods: {
+    logout() {
+      localStorage.removeItem("thebasacadmin")
+      this.$router.push({ name: 'Login' })
+    },
+    async addCategory() {
+      if(this.newCategory) {
+        try {
+          await menuService.addCategory({ categoryName: this.newCategory })
+          this.categories = (await menuService.getMenu()).data
+          this.newCategory = ''
+        } catch(err) {
+          console.log(err)
+          this.errorMessage = `*${err.response.data}*`
+        }
+      } else {
+        this.errorMessage = "*No string was given*"
+      }
+    },
+    async deleteCategory() {
+      try {
+        await menuService.deleteCategory({ categoryName: this.selectedCategory })
+        this.categories = (await menuService.getMenu()).data
+        this.selectedCategory = ''
+      } catch(err) {
+        console.log(err)
+        this.errorMessage = `*${err.response.data}*`
+      } 
+    }
+  },
+  async created() {
+    try {
+      this.categories = (await menuService.getMenu()).data
+    } catch(err) {
+      console.log(err)
     }
   }
 }

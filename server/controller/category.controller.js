@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router()
 const { ensureAuthorized } = require("../configs/jwt.config")
 const Category = require("../models/Category")
+const Item = require("../models/Item")
 
 
 router.get("/", ensureAuthorized ,async (req, res) => {
@@ -14,13 +15,11 @@ router.get("/", ensureAuthorized ,async (req, res) => {
   }
 })
 
-router.get("/:category", async (req, res) => {
-  const categoryName = req.params.category
-
-  console.log(categoryName)
+router.get("/:categoryId", ensureAuthorized ,async (req, res) => {
+  const categoryId = req.params.categoryId
 
   try {
-    const items = await Category.findOne({ categoryName })
+    const items = await Category.findById(categoryId)
     if(!!items) {
       res.status(200).json(items)
     } else {
@@ -32,9 +31,8 @@ router.get("/:category", async (req, res) => {
   }
 })
 
-router.post("/add", async (req, res) => {
+router.post("/add", ensureAuthorized, async (req, res) => {
   const { categoryName } = req.body
-
   try {
     const reqCat = await Category.findOne({ categoryName: categoryName })
     if(!!reqCat) {
@@ -75,13 +73,13 @@ router.put("/update", async (req, res) => {
   }
 })
 
-router.delete("/delete", async (req, res) => {
+router.delete("/delete", ensureAuthorized, async (req, res) => {
     const categoryName = req.body.categoryName
 
     try {
-      console.log(categoryName)
       const response = await Category.findOneAndDelete({ categoryName })
       if(!!response) {
+        await Item.deleteMany({ category: categoryName })
         res.status(200).send("Successfully deleted the category")
       } else {
         res.status(400).send("No such category")

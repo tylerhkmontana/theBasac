@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import vueRouter from 'vue-router'
+
 import Main from '@/components/main/Main.vue'
 import Home from '@/components/main/Home.vue'
 import Location from '@/components/main/Location.vue'
@@ -15,18 +16,18 @@ import EditMenu from '@/components/admin/EditMenu.vue'
 Vue.use(vueRouter)
 
 const routes = [
-  { path: '/', name: 'Main', component: Main, children: [
+  { path: '/', component: Main, children: [
     { path: '', name: 'Home', component: Home },
-    { path: '/menu', name: 'Menu', component: Menu, children: [
-      { path: '', component: AllItems },
-      { path: ':category', component: Items}
+    { path: '/menu', component: Menu, children: [
+      { path: '', name: 'AllItems', component: AllItems },
+      { path: ':category', name: 'Items', component: Items}
     ] },
     { path: '/location', name: 'Location', component: Location },
   ] },
   
   
-  { path: '/admin', name: 'Admin', component: Admin, children: [
-    { path: '', name: 'Management', component: Management, children: [
+  { path: '/admin', component: Admin ,children: [
+    { path: '', name: 'Management', component: Management, meta: { isAdmin: true }, children: [
       { path: 'edit/:category', name: 'EditMenu', component: EditMenu }
     ] },
     { path: 'login', name: 'Login', component: Login }
@@ -36,6 +37,16 @@ const routes = [
 const router = new vueRouter({
   routes,
   mode: 'history'
+})
+
+router.beforeEach(async (to, from, next) => {
+  if(to.matched.some(record => record.meta.isAdmin)) {
+    localStorage.getItem("thebasacadmin") ? next() : next('/admin/login')
+  } else if(to.name === 'Login'){
+    localStorage.getItem("thebasacadmin") ? next('/admin') : next()
+  } else {
+    next()
+  }
 })
 
 export default router
