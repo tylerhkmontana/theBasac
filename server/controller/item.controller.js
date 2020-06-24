@@ -1,21 +1,36 @@
 const express = require("express")
 const router = express.Router()
+
+const multer = require('multer')
+const upload = multer({ storage: multer.memoryStorage() })
+
 const Item = require("../models/Item")
 const Category = require("../models/Category")
+const { ensureAuthorized } = require("../configs/jwt.config")
 
-router.post("/add", async (req, res) => {
-  const { name, price, category, description } = req.body
+
+router.post("/add", ensureAuthorized, upload.single('file'), async (req, res) => {
+  let { name, price, category, description } = req.body
+  const file = req.file
+
+  if(!!file) {
+    itemImage  = { data: file.buffer, contentType: file.mimetype }
+  } else {
+    itemImage = null
+  }
 
   try {
-    const existingCategory = await Category.findOne({ categoryName: category })
+    const existingCategory = await Category.findById(category)
     const existingItem = await Item.findOne({ name })
 
     if(!!existingCategory && !(!!existingItem)) { //Category exists && Item doesn't exist
+      let category = existingCategory.categoryName
       const newItem = await new Item({
         name,
         price,
         category,
-        description
+        description,
+        itemImage
       }).save()
       await Category.updateOne({ categoryName: category }, { $push: { items: newItem } })
       res.status(200).send("Successfully created/added the item")
@@ -28,18 +43,16 @@ router.post("/add", async (req, res) => {
   }
 })
 
-router.delete("/delete", async (req, res) => {
-  const itemId = req.body.itemId
+router.delete("/delete", ensureAuthorized ,async (req, res) => {
+  const { items, categoryId } = req.body
 
+  console.log(items)
   try {
-    deletedItem = await Item.findOneAndDelete({ _id: itemId })
-    if(!!deletedItem) {
-      const result = await Category.updateOne({ categoryName: deletedItem.category }, { $pull: { items: { name: deletedItem.name } } })
-      console.log(result)
-      !!result ? res.status(200).send("Successfully removed the item") : res.status(400).send("Failed to remove the item from the category")
-    } else {
-      res.status(400).send("The item does not exist")
-    }
+    await Item.deleteMany({ name: { $in: items } })
+
+    const result = await Category.updateOne({ _id: categoryId }, { $pull: { items: { name: { $in: items } } } })
+
+    !!result ? res.status(200).send("Successfully removed the item") : res.status(400).send("Failed to remove the item from the category")
   } catch(err) {
       console.log(err)
       res.status(500).send("Internal Server Error")

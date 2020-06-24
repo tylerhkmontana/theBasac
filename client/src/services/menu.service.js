@@ -13,5 +13,11 @@ export default {
   },
   deleteCategory(category) {
     return api.delete("/api/category/delete", { headers: authHeader(), data: category })
+  },
+  addItem(item) {
+    return api.post("/api/item/add", item, { headers: authHeader() })
+  },
+  deleteItems(items) {
+    return api.delete("/api/item/delete", { headers: authHeader(), data: items })
   }
 }

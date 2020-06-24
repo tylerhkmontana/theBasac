@@ -20,7 +20,7 @@ const jwtModules = {
         }
       } catch(err) {
         console.log(err)
-        res.status(403).send("Not authorized")
+        res.status(403).send("Not authorized. Your token might have been expired. Please log out and log back in")
       }
     } else {
       res.status(403).send("Not authorized")

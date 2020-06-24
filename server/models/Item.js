@@ -18,7 +18,7 @@ const Item = mongoose.model("Item", new mongoose.Schema({
     required: true,
     uppercase: true
   },
-  itemIamge: {
+  itemImage: {
     data: Buffer,
     contentType: String
   }

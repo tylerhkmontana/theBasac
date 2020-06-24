@@ -3,10 +3,11 @@
   <v-card class="black--text ma-5 transparent" :height="cardHeight" :max-width="cardWidth" flat>
     <v-img 
     contain 
-    :src="foodInfo.imgSrc || require('@/assets/images/no_image.png')"
+    :src="imgSrc || require('@/assets/images/no_image.png')"
     :height="imgHeight"></v-img>
     <v-card-title class="justify-center">{{ foodInfo.name }}</v-card-title>
-    <v-card-subtitle class="text-center">${{ foodInfo.price }}</v-card-subtitle>
+    <v-card-subtitle class="text-center pa-0">${{ foodInfo.price }}</v-card-subtitle>
+    <v-card-text class="text-center">{{ foodInfo.description ? `"${foodInfo.description}"` : "" }}</v-card-text>
   </v-card>
 </template>
 
@@ -17,6 +18,28 @@ export default {
     cardHeight: String,
     cardWidth: String,
     imgHeight: String
+  },
+  computed: {
+    imgSrc() {
+      if(this.foodInfo.itemImage) {
+        const { contentType, data } = this.foodInfo.itemImage
+
+        // ** to convert string binary buffer to bson **
+        // var binary = '';
+        // var bytes = new Uint8Array( data );
+        // var len = bytes.byteLength;
+        // for (var i = 0; i < len; i++) {
+        //     binary += String.fromCharCode( bytes[ i ] );
+        // }
+
+        return `data:${contentType};base64,` + data;
+      } else {
+        return null
+      }
+    }
+  },
+  methods: {
+    
   }
 }
 </script>
