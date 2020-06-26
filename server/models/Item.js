@@ -1,7 +1,11 @@
 const mongoose = require("mongoose")
 
 const Item = mongoose.model("Item", new mongoose.Schema({
-  name: {
+  kName: {
+    type: String,
+    required: true,
+  },
+  eName: {
     type: String,
     required: true,
     uppercase: true

@@ -12,9 +12,14 @@
           accept="image/*"></v-file-input>
         <v-text-field 
           dark 
-          label="item name" 
+          label="item name in Korean" 
           style="text-color: white;" 
-          v-model="newItem.name"></v-text-field>
+          v-model="newItem.kName"></v-text-field>  
+        <v-text-field 
+          dark 
+          label="item name in English" 
+          style="text-color: white;" 
+          v-model="newItem.eName"></v-text-field>
         <v-text-field 
           dark 
           label="$price" 
@@ -37,7 +42,7 @@
       <v-col class="d-flex justify-center" cols="4" v-for="item in getItems" :key="item._id" >
         <FoodCard 
         cardHeight="90%" 
-        cardWidth="100%" 
+        cardWidth="350px" 
         imgHeight="200" 
         :foodInfo="item"/>
       </v-col>
@@ -56,7 +61,8 @@ export default {
       items: [],
       errorMessage: [],
       newItem: {
-        name: '',
+        kName: '',
+        eName: '',
         price: null,
         description: '',
         file: null,
@@ -76,7 +82,7 @@ export default {
       return this.errorMessage
     },
     getItemNames() {
-      return this.items.map(i => (i.name))
+      return this.items.map(i => (i.eName))
     }
   },
   methods: {
@@ -121,7 +127,7 @@ export default {
         errors.push("Please fill in price")
       } 
 
-      if(this.newItem.name === '') {
+      if(this.newItem.eName === '' || this.newItem.kName === '') {
         errors.push("Please fill in item name")
       }
       
@@ -132,7 +138,8 @@ export default {
       return errors
     },
     resetFields() {
-      this.newItem.name = ''
+      this.newItem.kName = ''
+      this.newItem.eName = ''
       this.newItem.price = null
       this.newItem.description = ''
       this.newItem.file = null

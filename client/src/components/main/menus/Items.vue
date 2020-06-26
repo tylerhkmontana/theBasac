@@ -3,10 +3,10 @@
     <h1>{{ this.currCategory }}</h1>
     <v-col cols="12">
       <v-row> 
-        <v-col class="d-flex justify-center" cols="4" v-for="item in currItems" :key="item._id" >
+        <v-col class="d-flex justify-center" cols="3" v-for="item in currItems" :key="item._id" >
           <FoodCard 
           cardHeight="70%" 
-          cardWidth="100%" 
+          cardWidth="300px" 
           imgHeight="200" 
           :foodInfo="item"/>
         </v-col>

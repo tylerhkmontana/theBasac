@@ -10,7 +10,7 @@ const { ensureAuthorized } = require("../configs/jwt.config")
 
 
 router.post("/add", ensureAuthorized, upload.single('file'), async (req, res) => {
-  let { name, price, category, description } = req.body
+  let { kName, eName, price, category, description } = req.body
   const file = req.file
 
   if(!!file) {
@@ -21,12 +21,13 @@ router.post("/add", ensureAuthorized, upload.single('file'), async (req, res) =>
 
   try {
     const existingCategory = await Category.findById(category)
-    const existingItem = await Item.findOne({ name })
+    const existingItem = await Item.findOne({ eName })
 
     if(!!existingCategory && !(!!existingItem)) { //Category exists && Item doesn't exist
       let category = existingCategory.categoryName
       const newItem = await new Item({
-        name,
+        eName,
+        kName,
         price,
         category,
         description,
@@ -48,9 +49,9 @@ router.delete("/delete", ensureAuthorized ,async (req, res) => {
 
   console.log(items)
   try {
-    await Item.deleteMany({ name: { $in: items } })
+    await Item.deleteMany({ eName: { $in: items } })
 
-    const result = await Category.updateOne({ _id: categoryId }, { $pull: { items: { name: { $in: items } } } })
+    const result = await Category.updateOne({ _id: categoryId }, { $pull: { items: { eName: { $in: items } } } })
 
     !!result ? res.status(200).send("Successfully removed the item") : res.status(400).send("Failed to remove the item from the category")
   } catch(err) {

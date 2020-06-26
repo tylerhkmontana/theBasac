@@ -10,11 +10,8 @@
       v-for="category in getMenu"
       :key="category._id">
         <v-row>
-          <v-col cols="11">
+          <v-col cols="12">
             <p class="text-center font-weight-bold my-auto">{{ category.categoryName }}</p>
-          </v-col>
-          <v-col class="hidden-xs-only d-flex flex-column justify-end" cols="1">
-            <v-btn class="transparent" depressed :to="`/menu/${category._id}`">More</v-btn>
           </v-col>
         </v-row>
    
@@ -24,7 +21,7 @@
               <FoodCard 
                 :foodInfo="item" 
                 cardHeight="80%" 
-                cardWidth="300" 
+                cardWidth="280" 
                 imgHeight="170" />
             </v-slide-item>
           </v-slide-group>
@@ -40,11 +37,6 @@ import menuService from '@/services/menu.service.js'
 export default {
   data() {
     return {
-      foodInfo: {
-        imgSrc: "https://img.etoday.co.kr/pto_db/2019/02/20190208154354_1299168_600_372.JPG",
-        name: "DIY Tukpokki",
-        price: "19.99"
-      },
       menu: null
     }
   },

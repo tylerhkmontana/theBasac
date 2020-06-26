@@ -5,9 +5,19 @@
     contain 
     :src="imgSrc || require('@/assets/images/no_image.png')"
     :height="imgHeight"></v-img>
-    <v-card-title class="justify-center">{{ foodInfo.name }}</v-card-title>
-    <v-card-subtitle class="text-center pa-0">${{ foodInfo.price }}</v-card-subtitle>
-    <v-card-text class="text-center">{{ foodInfo.description ? `"${foodInfo.description}"` : "" }}</v-card-text>
+    <div class="d-flex justify-space-between mt-2 " cols="4">
+      <div cols="3">
+        <p class="font-weight-bold ma-0">{{ foodInfo.kName }}</p>
+        <p class="ma-0" style="font-size: 14px;">{{ foodInfo.eName }}</p>
+      </div>
+      <div cols="1">
+        <p>${{ foodInfo.price }}</p>
+      </div>
+    </div>
+    <!-- <v-card-title class="justify-center">{{ foodInfo.kName }}</v-card-title>
+    <v-card-title class="justify-center">{{ foodInfo.eName }}</v-card-title>
+    <v-card-subtitle class="text-center pa-0">${{ foodInfo.price }}</v-card-subtitle> -->
+    <v-card-text class="text-center pa-1">{{ foodInfo.description ? `"${foodInfo.description}"` : "" }}</v-card-text>
   </v-card>
 </template>
 
