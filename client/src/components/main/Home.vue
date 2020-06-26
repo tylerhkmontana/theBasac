@@ -66,14 +66,43 @@
       <v-row justify="end">
         <v-btn class="white--text transparent mr-5" depressed to="/menu">Go to menu <v-icon>mdi-arrow-right-bold</v-icon></v-btn>      
       </v-row>
-      
     </v-container>     
+
+    <v-container class="my-10 pa-10" fluid>
+      <h1 class="text-center mb-10">MENU <v-icon class="pb-2" size="30" color="black">mdi-silverware-fork-knife</v-icon></h1>
+      <v-row class="my-7" v-for="category in menu" :key="category._id">
+        <h2 class="text-center"><v-icon class="pb-2" color="black">mdi-check</v-icon> {{ category.categoryName }}</h2>
+        <v-col cols=12>
+          <v-row>
+            <v-col cols="3 d-flex justify-space-between mx-2" v-for="item in category.items" :key="item._id">
+              <v-chip color="orange" outlined>{{ item.name }}</v-chip>
+              <span dark>$ {{ item.price }}</span>
+            </v-col>
+          </v-row>
+        </v-col>
+        <v-divider class="mx-1 my-5"></v-divider>
+      </v-row>
+      
+    </v-container>
   </div>
 </template>
 
 <script>
+import menuService from '@/services/menu.service.js'
 export default {
-  
+
+  data() {
+    return {
+      menu: {}
+    }
+  },
+  async created() {
+    try {
+      this.menu = (await menuService.getMenu()).data
+    } catch(err) {
+      console.log(err)
+    } 
+  }
 }
 </script>
 

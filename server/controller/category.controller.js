@@ -5,7 +5,7 @@ const Category = require("../models/Category")
 const Item = require("../models/Item")
 
 
-router.get("/", ensureAuthorized ,async (req, res) => {
+router.get("/" ,async (req, res) => {
   try {
     const menu = await Category.find({})
     res.status(200).json(menu)
@@ -15,7 +15,7 @@ router.get("/", ensureAuthorized ,async (req, res) => {
   }
 })
 
-router.get("/:categoryId", ensureAuthorized ,async (req, res) => {
+router.get("/:categoryId", async (req, res) => {
   const categoryId = req.params.categoryId
 
   try {
