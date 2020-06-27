@@ -2,11 +2,8 @@
   <div class="home">
 
     <v-carousel cycle height="600" show-arrows-on-hover hide-delimiter-background>
-      <v-carousel-item>
-        <v-img src="https://s3-media0.fl.yelpcdn.com/bphoto/v33RYEy_Q0IqppGPowCJyw/o.jpg"></v-img>
-      </v-carousel-item>
-      <v-carousel-item>
-        <v-img src="https://s3-media0.fl.yelpcdn.com/bphoto/r-RDoEcOfMKhlumLz8NliQ/o.jpg"></v-img>
+      <v-carousel-item v-for="(src, i) in getSlideSrc" :key="i">
+        <v-img :src="src"></v-img>
       </v-carousel-item>
     </v-carousel>
 
@@ -41,16 +38,35 @@
 
 <script>
 import menuService from '@/services/menu.service.js'
+import slideService from '@/services/slide.service.js'
+
 export default {
 
   data() {
     return {
-      menu: {}
+      menu: {},
+      slides: []
+    }
+  },
+  computed: {
+    getSlideSrc() {
+      return this.slides.map(s => {
+        const { contentType, data } = s.file
+    
+        var binary = '';
+        var bytes = new Uint8Array( data.data );
+        var len = bytes.byteLength;
+        for (var i = 0; i < len; i++) {
+            binary += String.fromCharCode( bytes[ i ] );
+        }
+        return `data:${contentType};base64,` + btoa(binary);
+      })
     }
   },
   async created() {
     try {
       this.menu = (await menuService.getMenu()).data
+      this.slides = (await slideService.getSlides()).data
     } catch(err) {
       console.log(err)
     } 

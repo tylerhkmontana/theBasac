@@ -5,10 +5,6 @@ const saltRounds = 10
 const Admin = require("../models/Admin")
 const jwtModules = require("../configs/jwt.config")
 
-router.get("/", (req, res) => {
- 
-})
-
 router.post("/register", async (req, res) => {
   var { adminId, password, name } = req.body
 

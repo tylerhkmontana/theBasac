@@ -3,10 +3,10 @@ import authHeader from '@/services/authHeader.js'
 
 export default {
   getMenu() {
-    return api.get("/api/category", { headers: authHeader() })
+    return api.get("/api/category")
   },
   getItems(categoryId) {
-    return api.get(`/api/category/${categoryId}`, { headers: authHeader() })
+    return api.get(`/api/category/${categoryId}`)
   },
   addCategory(category) {
     return api.post("/api/category/add", category, { headers: authHeader() })
