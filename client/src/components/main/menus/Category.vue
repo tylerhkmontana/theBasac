@@ -1,8 +1,8 @@
 <template>
-  <v-toolbar class="mt-5 orange mx-auto" style="border-radius: 15px" dark max-width="1000px">
+  <v-toolbar class="mt-5 orange mx-auto" style="border-radius: 15px;" dark max-width="1000px">
     <v-slide-group show-arrows>
       <v-slide-item v-for="category in categories" :key="category._id">
-        <v-btn color="transparent mx-10 white--text" depressed :to="`/menu/${category._id}`" rounded>
+        <v-btn color="transparent white--text" depressed :to="`/menu/${category._id}`" :style="`font-size: ${resFontSize}; height: auto;`" rounded>
           {{ category.categoryName }}
         </v-btn>
       </v-slide-item>
@@ -17,6 +17,15 @@ export default {
   data() {
     return {
       categories: null
+    }
+  },
+  computed: {
+    resFontSize() {
+      if(this.windowWidth < 700) {
+        return '3vw'
+      } else {
+        return '16px'
+      }
     }
   },
   async created() {

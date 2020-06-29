@@ -1,7 +1,7 @@
 <template>
   <div>
     <Category />
-    <v-container class="mt-10" fluid style="width: 80%">
+    <v-container class="mt-5" fluid style="width: 90%; min-height: 100vh;">
       <router-view></router-view> 
     </v-container>  
   </div>

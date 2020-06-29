@@ -1,35 +1,42 @@
 <template>
   <div class="home">
 
-    <v-carousel cycle show-arrows-on-hover hide-delimiter-background>
+    <v-carousel cycle show-arrows-on-hover hide-delimiter-background height="auto">
       <v-carousel-item v-for="(src, i) in getSlideSrc" :key="i">
-        <v-img :aspect-ratio="16/9" :src="src"></v-img>
+        <v-img :aspect-ratio="16/9" :src="src" max-height="500px"></v-img>
       </v-carousel-item>
     </v-carousel>
 
     <v-container class="d-flex justify-end" fluid>
       <div class="d-flex flex-column align-end">
-        <p style="font-size: 18px; margin-top: 5px;">158-09B Norther blvd, Flushing 11358</p>
-        <v-chip tag="a" href="tel:7187628484" style="font-size: 18px;" color="black" outlined><v-icon>mdi-phone</v-icon>&nbsp;718-762-8484</v-chip>
+        <p class="mb-1" :style="`font-size: ${resFontSize};`">158-09B Norther blvd, Flushing 11358</p>
+        <v-chip tag="a" href="tel:7187628484" :style="`font-size: ${resFontSize};`" color="black" :small="resChipSize" outlined pill>
+          <v-icon :size="resFontSize">mdi-phone</v-icon>&nbsp;718-762-8484
+        </v-chip>
       </div>
     </v-container>
 
     <v-container class="my-10 pa-10" fluid>
-      <h1 class="text-center mb-10">MENU <v-icon class="pb-2" size="30" color="black">mdi-silverware-fork-knife</v-icon></h1>
+
+      <p class="text-center mb-10 font-weight-bold" :style="`font-size: ${resTitleFont}`">
+        MENU <v-icon class="pb-2" :size="resTitleFont" color="black">mdi-silverware-fork-knife</v-icon>
+      </p>
       <v-row class="my-7" v-for="category in menu" :key="category._id">
-        <h2 class="text-center"><v-icon class="pb-2" color="black">mdi-check</v-icon> {{ category.categoryName }}</h2>
+        <p class="ma-0 font-weight-bold" :style="`font-size: ${resCategoryFont};`">
+          <v-icon class="pb-1" color="black" :size="resCategoryFont">mdi-check</v-icon> 
+          {{ category.categoryName }}
+        </p>
         <v-col cols="12">
           <v-row>
-            <v-col class="d-flex justify-space-between" cols="3" v-for="item in category.items" :key="item._id">
-              <div>
-                <v-chip class="font-weight-bold" color="orange" outlined>{{ item.kName }}</v-chip><br>
-                <v-chip color="black" outlined small>{{ item.eName }}</v-chip>
+            <v-col class="d-flex justify-space-between" :cols="resColSize" v-for="item in category.items" :key="item._id">
+              <div class="d-flex flex-column">
+                <span :style="`font-size: ${resFontSize}; color: orange;`" class="font-weight-bold" color="orange">{{ item.kName }}</span>
+                <span :style="`font-size: ${resSmallFontSize};`">{{ item.eName }}</span>
               </div>
-              <span dark>$ {{ item.price }}</span>
+              <span :style="`font-size: ${resFontSize};`" dark>$ {{ item.price }}</span>
             </v-col>
           </v-row>
         </v-col>
-        <v-divider class="mx-1 my-5"></v-divider>
       </v-row>
 
       <!-- Alert Message -->
@@ -39,8 +46,8 @@
             <v-btn depressed color="transparent" @click="manageAlert = false">X</v-btn>
           </div>
           <div class="d-flex flex-column justify-space-between">
-            <h1 class="text-center mb-10 alert-message">{{ alert.title }}</h1>
-            <p class="alert-message mb-10">{{ alert.message }}</p>
+            <p class="text-center mb-10 alert-message font-weight-bold" :style="`font-size: ${resCategoryFont}`">{{ alert.title }}</p>
+            <p class="alert-message mb-10" :style="`font-size: ${resFontSize}`">{{ alert.message }}</p>
             <div class="d-flex justify-center" style="font-family: 'Indie Flower', cursive; font-size:25px;">
               <span class="font-weight-normal">The</span>
               <span class="orange--text font-weight-bold">Basac</span>
@@ -81,6 +88,50 @@ export default {
         }
         return `data:${contentType};base64,` + btoa(binary);
       })
+    },
+    resFontSize() {
+      if(this.windowWidth < 700) {
+        return '3vw'
+      } else {
+        return '18px'
+      }
+    },
+    resChipSize() {
+      if(this.windowWidth  < 700) {
+        return true
+      } else {
+        return false
+      }
+    },
+    resColSize() {
+      if(this.windowWidth < 700) {
+        return 12
+      } else if(this.windowWidth < 1350 && this.windowWidth > 700) {
+        return 6
+      } else {
+        return 4
+      }
+    },
+    resSmallFontSize() {
+      if(this.windowWidth < 700) {
+        return '2vw'
+      } else {
+        return '14px'
+      }
+    },
+    resCategoryFont() {
+      if(this.windowWidth  < 700) {
+        return '4vw'
+      } else {
+        return '25px'
+      }
+    },
+    resTitleFont() {
+      if(this.windowWidth  < 700) {
+        return '6vw'
+      } else {
+        return '35px'
+      }
     }
   },
   async created() {

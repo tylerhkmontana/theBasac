@@ -1,17 +1,20 @@
 <template>
   <div>
-    <h2>All</h2>
+    <h2> All</h2>
     <v-sheet 
-      class="my-10 d-flex flex-column justify-space-evenly container" 
+      class="my-5 d-flex flex-column justify-space-evenly container" 
       max-width="100%" 
-      color="white" 
-      elevation="10" 
-      height="400"
+      color="light-green lighten-5" 
+      elevation="3"
+      height="auto"
       v-for="category in getMenu"
       :key="category._id">
         <v-row>
-          <v-col cols="12">
-            <p class="text-center font-weight-bold my-auto">{{ category.categoryName }}</p>
+          <v-col class="pa-0" cols="12">
+            <p class="text-center font-weight-bold my-auto">
+              <v-icon class="pb-1" color="black">mdi-check</v-icon> 
+              {{ category.categoryName }}
+            </p>
           </v-col>
         </v-row>
    
@@ -20,8 +23,8 @@
             <v-slide-item v-for="item in category.items" :key="item._id">
               <FoodCard 
                 :foodInfo="item" 
-                cardHeight="80%" 
-                cardWidth="280" 
+                cardHeight="100%" 
+                :cardWidth="resFoodCardWidth" 
                 imgHeight="170" />
             </v-slide-item>
           </v-slide-group>
@@ -46,7 +49,14 @@ export default {
   computed: {
     getMenu() {
       return this.menu
-    }
+    },
+    resFoodCardWidth() {
+      if(this.windowWidth < 700) {
+        return '50vw'
+      } else {
+        return '280'
+      }
+    },
   },
   async created() {
     try {

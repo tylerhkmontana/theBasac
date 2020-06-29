@@ -1,6 +1,6 @@
 <template>
 
-  <v-container class="d-flex">
+  <v-container class="d-flex" style="min-height: 1vh;">
     <v-col>
       <div class="d-flex justify-space-between my-10">
         <h2 class="">Store Location</h2>
