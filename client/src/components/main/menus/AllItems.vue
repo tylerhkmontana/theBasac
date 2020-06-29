@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>All</h1>
+    <h2>All</h2>
     <v-sheet 
       class="my-10 d-flex flex-column justify-space-evenly container" 
       max-width="100%" 

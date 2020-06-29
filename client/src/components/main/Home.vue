@@ -1,9 +1,9 @@
 <template>
   <div class="home">
 
-    <v-carousel cycle height="600" show-arrows-on-hover hide-delimiter-background>
+    <v-carousel cycle show-arrows-on-hover hide-delimiter-background>
       <v-carousel-item v-for="(src, i) in getSlideSrc" :key="i">
-        <v-img :src="src"></v-img>
+        <v-img :aspect-ratio="16/9" :src="src"></v-img>
       </v-carousel-item>
     </v-carousel>
 
@@ -31,6 +31,23 @@
         </v-col>
         <v-divider class="mx-1 my-5"></v-divider>
       </v-row>
+
+      <!-- Alert Message -->
+      <v-dialog v-model="manageAlert" max-width="600">
+        <v-container class="white" v-if="alert">
+          <div class="d-flex justify-end">
+            <v-btn depressed color="transparent" @click="manageAlert = false">X</v-btn>
+          </div>
+          <div class="d-flex flex-column justify-space-between">
+            <h1 class="text-center mb-10 alert-message">{{ alert.title }}</h1>
+            <p class="alert-message mb-10">{{ alert.message }}</p>
+            <div class="d-flex justify-center" style="font-family: 'Indie Flower', cursive; font-size:25px;">
+              <span class="font-weight-normal">The</span>
+              <span class="orange--text font-weight-bold">Basac</span>
+            </div>
+          </div>
+        </v-container>
+      </v-dialog>
       
     </v-container>
   </div>
@@ -39,13 +56,16 @@
 <script>
 import menuService from '@/services/menu.service.js'
 import slideService from '@/services/slide.service.js'
+import alertService from '@/services/alert.service.js'
 
 export default {
 
   data() {
     return {
       menu: {},
-      slides: []
+      slides: [],
+      alert: null,
+      manageAlert: false
     }
   },
   computed: {
@@ -67,6 +87,10 @@ export default {
     try {
       this.menu = (await menuService.getMenu()).data
       this.slides = (await slideService.getSlides()).data
+      this.alert = (await alertService.getAlert()).data[0]
+      if(this.alert) {
+        this.manageAlert = true
+      }
     } catch(err) {
       console.log(err)
     } 
@@ -79,5 +103,15 @@ export default {
   display: flex;
   justify-content: space-around;
   margin-top: 30px;
+}
+
+.alert-message {
+ white-space: pre-wrap;       /* css-3 */
+ white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+ white-space: -pre-wrap;      /* Opera 4-6 */
+ white-space: -o-pre-wrap;    /* Opera 7 */
+ word-wrap: break-word;       /* Internet Explorer 5.5+ */
+ text-align: center;
+ font-family: 'Balsamiq Sans', cursive;
 }
 </style>

@@ -16,6 +16,7 @@ app.use("/api/admin", require('./controller/admin.controller.js'))
 app.use("/api/category", require('./controller/category.controller.js'))
 app.use("/api/item", require('./controller/item.controller.js'))
 app.use("/api/slide", require('./controller/slide.controller.js'))
+app.use("/api/alert", require('./controller/alert.controller.js'))
 
 
 const port = process.env.PORT || 3000

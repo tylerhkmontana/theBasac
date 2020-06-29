@@ -3,7 +3,7 @@
    
       <v-card-title class="justify-center text-center web-title">
         <span class="font-weight-normal">The</span>
-        <span class="orange--text font-weight-bold">Basac</span>
+        <router-link tag="a" to="/" class="orange--text font-weight-bold" style="text-decoration: none;">Basac</router-link>
       </v-card-title>
 
 
