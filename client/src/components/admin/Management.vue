@@ -42,7 +42,7 @@
     <!-- Manage Category Dialogue -->
     <v-dialog v-model="manageCategory" max-width="600" dark>
       <v-container class="orange">
-        <h2 class="text-center white--text">Mange Category</h2>
+        <h2 class="text-center white--text">Manage Category</h2>
         <p class="text-center red--text mx-5">{{ this.error }}</p>
         <v-row class="d-flex justify-center">
           <v-col cols="8">
@@ -66,7 +66,7 @@
     <!-- Manage Slides Dialogue -->
     <v-dialog v-model="manageSlides" max-width="600" dark>
       <v-container class="orange">
-        <h2 class="text-center white--text">Mange Slides</h2>
+        <h2 class="text-center white--text">Manage Slides</h2>
         <p class="text-center red--text mx-5">{{ this.error }}</p>
         <v-row class="d-flex justify-center">
           <v-col cols="8">
@@ -90,7 +90,7 @@
     <!-- Manage Alert Dialogue -->
     <v-dialog v-model="manageAlert" max-width="600" dark>
       <v-container class="orange">
-        <h2 class="text-center white--text">Mange Alert</h2>
+        <h2 class="text-center white--text">Manage Alert</h2>
         <p class="text-center red--text mx-5">{{ this.error }}</p>
         <v-row class="d-flex flex-column justify-center">
           <v-text-field class="mx-5" label="Title" v-model="newAlert.title" outlined dense></v-text-field>

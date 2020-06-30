@@ -21,6 +21,7 @@
       <p class="text-center mb-10 font-weight-bold" :style="`font-size: ${resTitleFont}`">
         MENU <v-icon class="pb-2" :size="resTitleFont" color="black">mdi-silverware-fork-knife</v-icon>
       </p>
+      <p class="text-center" :style="`font-size: ${resFontSize};`"><strong>Store Hours</strong><br>MON-SUN 11:00 AM ~ 11:00 PM</p>
       <v-row class="my-7" v-for="category in menu" :key="category._id">
         <p class="ma-0 font-weight-bold" :style="`font-size: ${resCategoryFont};`">
           <v-icon class="pb-1" color="black" :size="resCategoryFont">mdi-check</v-icon> 

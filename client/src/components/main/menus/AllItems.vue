@@ -2,17 +2,16 @@
   <div>
     <h2> All</h2>
     <v-sheet 
-      class="my-5 d-flex flex-column justify-space-evenly container" 
-      max-width="100%" 
-      color="light-green lighten-5" 
-      elevation="3"
+      class="my-5 d-flex flex-column justify-space-evenly container"
+      max-width="100%"  
       height="auto"
+      color="orange lighten-5"
       v-for="category in getMenu"
       :key="category._id">
         <v-row>
           <v-col class="pa-0" cols="12">
             <p class="text-center font-weight-bold my-auto">
-              <v-icon class="pb-1" color="black">mdi-check</v-icon> 
+              <!-- <v-icon class="pb-1" color="black">mdi-check</v-icon>  -->
               {{ category.categoryName }}
             </p>
           </v-col>
