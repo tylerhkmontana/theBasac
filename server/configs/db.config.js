@@ -1,5 +1,5 @@
 const mongoose = require("mongoose")
-const uri = "mongodb://127.0.0.1:27017/theBasac?readPreference=primary&appname=MongoDB%20Compass&ssl=false"
+const uri = process.env.DATABASE_URI
 
 const dbConnection = async () => {
   try {

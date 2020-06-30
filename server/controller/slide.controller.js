@@ -27,7 +27,6 @@ router.post("/add", ensureAuthorized, upload.single('file'), async (req, res) =>
 
   try {
     const targetFile = await Slide.findOne({ 'file.fileName': newFile.fileName })
-    console.log(targetFile)
     if(!!targetFile) {
       res.status(400).send("A file with the same name already exists")
     } else {
