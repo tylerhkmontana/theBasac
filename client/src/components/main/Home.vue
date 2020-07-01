@@ -14,18 +14,18 @@
           <v-icon :size="resFontSize">mdi-phone</v-icon>&nbsp;718-762-8484
         </v-chip>
       </v-col>
-      <v-col :class="`d-flex ${resDeliveryButton.flex} pa-0`" cols="6">
-        <a :class="resDeliveryButton.margin" href="https://www.ubereats.com/new-york/food-delivery/the-basac/QdEFfhT0S3qT6Mv2nuAeJA" target="_blank">
-          <v-img src="@/assets/images/UberEats_Badge_Horizontal.png" :width="resDeliveryButton.uber"></v-img> 
+      <v-col class="d-flex justify-end pa-0" cols="6">
+        <a class="mt-3 mr-2" href="https://www.ubereats.com/new-york/food-delivery/the-basac/QdEFfhT0S3qT6Mv2nuAeJA" target="_blank">
+          <v-img src="@/assets/images/UberEats_Badge_Vertical.png" :width="resDeliveryButton.uber"></v-img> 
         </a>
-        <a :class="resDeliveryButton.margin" href="https://www.doordash.com/business/78603/?utm_source=partner-link&utm_medium=website&utm_campaign=78603&utm_content=red-xl" target="_blank" alt="Order Food Delivery with DoorDash" title="Order Food Delivery with DoorDash">
+        <a class="mt-3 mr-2" href="https://www.doordash.com/business/78603/?utm_source=partner-link&utm_medium=website&utm_campaign=78603&utm_content=red-xl" target="_blank" alt="Order Food Delivery with DoorDash" title="Order Food Delivery with DoorDash">
           <v-img src="https://cdn.doordash.com/media/button/button_red_xl.svg" :width="resDeliveryButton.doordash"></v-img>
         </a>
       </v-col>
       
     </v-col>
 
-    <v-container class="my-10 pa-10" fluid>
+    <v-container class="pa-10" fluid>
 
       <p class="text-center mb-10 font-weight-bold" :style="`font-size: ${resTitleFont}`">
         MENU <v-icon class="pb-2" :size="resTitleFont" color="black">mdi-silverware-fork-knife</v-icon>
@@ -146,17 +146,13 @@ export default {
     resDeliveryButton() {
       if(this.windowWidth  < 700) {
         return {
-          uber: '20vw',
-          doordash: '15vw',
-          flex: 'flex-column align-end',
-          margin: 'mt-2 mr-2'
+          uber: '13vw',
+          doordash: '30vw',
         }
       } else {
         return {
-          uber: '170px',
-          doordash: '137px',
-          flex: 'justify-end',
-          margin: 'ma-2'
+          uber: '75px',
+          doordash: '165px',
         }
       }
     }
