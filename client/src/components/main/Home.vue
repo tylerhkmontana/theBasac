@@ -7,14 +7,23 @@
       </v-carousel-item>
     </v-carousel>
 
-    <v-container class="d-flex justify-end" fluid>
-      <div class="d-flex flex-column align-end">
+    <v-col class="d-flex justify-space-between pa-0" cols="12">
+      <v-col class="d-flex flex-column align-start" cols="6">
         <p class="mb-1" :style="`font-size: ${resFontSize};`">158-09B Norther blvd, Flushing 11358</p>
         <v-chip tag="a" href="tel:7187628484" :style="`font-size: ${resFontSize};`" color="black" :small="resChipSize" outlined pill>
           <v-icon :size="resFontSize">mdi-phone</v-icon>&nbsp;718-762-8484
         </v-chip>
-      </div>
-    </v-container>
+      </v-col>
+      <v-col :class="`d-flex ${resDeliveryButton.flex} pa-0`" cols="6">
+        <a :class="resDeliveryButton.margin" href="https://www.ubereats.com/new-york/food-delivery/the-basac/QdEFfhT0S3qT6Mv2nuAeJA" target="_blank">
+          <v-img src="@/assets/images/UberEats_Badge_Horizontal.png" :width="resDeliveryButton.uber"></v-img> 
+        </a>
+        <a :class="resDeliveryButton.margin" href="https://www.doordash.com/business/78603/?utm_source=partner-link&utm_medium=website&utm_campaign=78603&utm_content=red-xl" target="_blank" alt="Order Food Delivery with DoorDash" title="Order Food Delivery with DoorDash">
+          <v-img src="https://cdn.doordash.com/media/button/button_red_xl.svg" :width="resDeliveryButton.doordash"></v-img>
+        </a>
+      </v-col>
+      
+    </v-col>
 
     <v-container class="my-10 pa-10" fluid>
 
@@ -132,6 +141,23 @@ export default {
         return '6vw'
       } else {
         return '35px'
+      }
+    },
+    resDeliveryButton() {
+      if(this.windowWidth  < 700) {
+        return {
+          uber: '20vw',
+          doordash: '15vw',
+          flex: 'flex-column align-end',
+          margin: 'mt-2 mr-2'
+        }
+      } else {
+        return {
+          uber: '170px',
+          doordash: '137px',
+          flex: 'justify-end',
+          margin: 'ma-2'
+        }
       }
     }
   },

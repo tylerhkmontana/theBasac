@@ -3,7 +3,7 @@
     <p class="text-center red--text" v-for="(e, i) in error" :key="i">*{{ e }}*</p>
     <v-row>
 
-      <v-col class="py-3 px-5 d-flex flex-column transparent" cols="4">
+      <v-col class="py-3 px-5 d-flex flex-column transparent" :cols="resColSize">
         <v-file-input 
           dark 
           label="attach image" 
@@ -33,16 +33,16 @@
         <v-btn dark outlined @click="addItem">Add Item</v-btn>
       </v-col>
 
-      <v-col class="d-flex flex-column" height="100%" cols="4">
+      <v-col class="d-flex flex-column" height="100%" :cols="resColSize">
         <h1 class="white--text text-center font-weight-light">Delete Item</h1>
         <v-combobox :items="getItemNames" dark multiple chips v-model="selectedItems"></v-combobox>
         <v-btn depressed outlined dark @click="deleteItems">Delete</v-btn>
       </v-col>
 
-      <v-col class="d-flex justify-center" cols="4" v-for="item in getItems" :key="item._id" >
+      <v-col class="d-flex justify-center" :cols="resColSize" v-for="item in getItems" :key="item._id" >
         <FoodCard 
         cardHeight="90%" 
-        cardWidth="350px" 
+        :cardWidth="resFoodCardWidth" 
         imgHeight="200" 
         :foodInfo="item"/>
       </v-col>
@@ -83,6 +83,22 @@ export default {
     },
     getItemNames() {
       return this.items.map(i => (i.eName))
+    },
+    resColSize() {
+      if(this.windowWidth < 700) {
+        return 12
+      } else if(this.windowWidth > 700 && this.windowWidth < 1000) {
+        return 6
+      } else {
+        return 4
+      }
+    },
+    resFoodCardWidth() {
+      if(this.windowWidth < 700) {
+        return '60vw'
+      } else {
+        return '350'
+      }
     }
   },
   methods: {

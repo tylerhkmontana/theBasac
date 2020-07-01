@@ -1,46 +1,49 @@
 <template>
-  <v-container style="width: 80vw">
+  <v-container :style="`width: ${responsiveDesign.windowSize}`" fluid>
     <h1 class="text-center white--text">Menu Management</h1>
-    <v-btn 
-      @click="logout" 
-      color="red accent-4" 
-      style="position: absolute; top: 60px; right: 60px;"
-      dark
-      depressed
-    >
-      LOG OUT
-    </v-btn>
-    <v-row>
+    <div class="d-flex flex-column">
       <v-btn 
-        class="my-5 mx-auto" 
-        color="red accent-4"
-        @click="manageCategory = true"
-        outlined
+        class="mx-auto"
+        @click="logout" 
+        color="red accent-4" 
+        dark
+        depressed
       >
-        MANAGE CATEGORY
+        LOG OUT
       </v-btn>
+      <v-row :class="`d-flex ${responsiveDesign.manageButtons}`">
+        <v-btn 
+          class="my-5 mx-auto" 
+          color="red accent-4"
+          @click="manageCategory = true"
+          outlined
+        >
+          MANAGE CATEGORY
+        </v-btn>
 
-      <v-btn 
-        class="my-5 mx-auto" 
-        color="red accent-4"
-        @click="manageSlides = true"
-        outlined
-      >
-        MANAGE SLIDES
-      </v-btn>
+        <v-btn 
+          class="my-5 mx-auto" 
+          color="red accent-4"
+          @click="manageSlides = true"
+          outlined
+        >
+          MANAGE SLIDES
+        </v-btn>
 
-      <v-btn 
-        class="my-5 mx-auto" 
-        color="red accent-4"
-        @click="manageAlert = true"
-        outlined
-      >
-        MANAGE Alert
-      </v-btn>
-    </v-row>
+        <v-btn 
+          class="my-5 mx-auto" 
+          color="red accent-4"
+          @click="manageAlert = true"
+          outlined
+        >
+          MANAGE Alert
+        </v-btn>
+      </v-row>
+    </div>
+    
 
     <!-- Manage Category Dialogue -->
-    <v-dialog v-model="manageCategory" max-width="600" dark>
+    <v-dialog v-model="manageCategory" :max-width="responsiveDesign.dialogWidth" dark>
       <v-container class="orange">
         <h2 class="text-center white--text">Manage Category</h2>
         <p class="text-center red--text mx-5">{{ this.error }}</p>
@@ -48,7 +51,7 @@
           <v-col cols="8">
             <v-text-field label="Category" autocomplete="off" v-model="newCategory"></v-text-field>
           </v-col>
-          <v-col cols="2">
+          <v-col class="d-flex justify-center" cols="4">
             <v-btn class="white--text" depressed outlined @click="addCategory">ADD</v-btn>
           </v-col>
         </v-row>
@@ -56,7 +59,7 @@
           <v-col cols="8">
             <v-select :items="selectCategories" v-model="selectedCategory"></v-select>
           </v-col>
-          <v-col cols="2">
+          <v-col class="d-flex justify-center" cols="4">
             <v-btn class="white--text" depressed type="submit" outlined @click="deleteCategory">DELETE</v-btn>
           </v-col>
         </v-row>
@@ -64,7 +67,7 @@
     </v-dialog>
 
     <!-- Manage Slides Dialogue -->
-    <v-dialog v-model="manageSlides" max-width="600" dark>
+    <v-dialog v-model="manageSlides" :max-width="responsiveDesign.dialogWidth" dark>
       <v-container class="orange">
         <h2 class="text-center white--text">Manage Slides</h2>
         <p class="text-center red--text mx-5">{{ this.error }}</p>
@@ -72,7 +75,7 @@
           <v-col cols="8">
             <v-file-input label="add slide" v-model="newSlide"></v-file-input>
           </v-col>
-          <v-col cols="2">
+          <v-col class="d-flex justify-center" cols="4">
             <v-btn class="white--text" depressed outlined @click="addSlide">ADD</v-btn>
           </v-col>
         </v-row>
@@ -80,7 +83,7 @@
           <v-col cols="8">
             <v-select :items="getCurrSlides" v-model="selectedSlide"></v-select>
           </v-col>
-          <v-col cols="2">
+          <v-col class="d-flex justify-center" cols="4">
             <v-btn class="white--text" depressed type="submit" outlined @click="deleteSlide">DELETE</v-btn>
           </v-col>
         </v-row>
@@ -88,7 +91,7 @@
     </v-dialog>
 
     <!-- Manage Alert Dialogue -->
-    <v-dialog v-model="manageAlert" max-width="600" dark>
+    <v-dialog v-model="manageAlert" :max-width="responsiveDesign.dialogWidth" dark>
       <v-container class="orange">
         <h2 class="text-center white--text">Manage Alert</h2>
         <p class="text-center red--text mx-5">{{ this.error }}</p>
@@ -103,8 +106,8 @@
       </v-container>
     </v-dialog>
 
-    <v-toolbar style="border-radius: 10px; width: 80%; margin: auto;" color="transparent" flat>
-      <v-slide-group>
+    <v-toolbar style="border-radius: 10px; width: 100%; margin: auto;" color="transparent" flat>
+      <v-slide-group show-arrows>
         <v-slide-item v-for="category in allCategories" :key="category._id">
           <v-btn 
             class="mx-2" 
@@ -163,6 +166,21 @@ export default {
     },
     getCurrSlides() {
       return this.currSlides.map(m => (m.file.fileName))
+    },
+    responsiveDesign() {
+      if(this.windowWidth < 700) {
+        return {
+          manageButtons: 'flex-column align-center justyify-center',
+          windowSize: '100vw',
+          dialogWidth: 400,
+        }
+      } else {
+        return {
+          manageButtons: 'justify-space-around',
+          windowSize: '80vw',
+          dialogWidth: 600
+        }
+      }
     }
   },
   methods: {

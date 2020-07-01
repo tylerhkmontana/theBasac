@@ -1,5 +1,5 @@
 <template>
-  <v-container style="width: 500px; position: relative; top: 10%;" @keydown.enter="login">
+  <v-container :style="`width: ${resLoginWindow}; position: relative; top: 10%;`" @keydown.enter="login">
     <h1 class="my-5 text-center white--text">ADMIN LOGIN</h1>
 
     <p class="red--text text-center">{{ error }}</p>
@@ -27,6 +27,13 @@ export default {
   computed: {
     error() {
       return this.errorMessage
+    },
+    resLoginWindow() {
+      if(this.windowWidth < 700) {
+        return '300px'
+      } else {
+        return '500px'
+      }
     }
   },
   methods: {
