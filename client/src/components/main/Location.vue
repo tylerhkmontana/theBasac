@@ -1,7 +1,7 @@
 <template>
   <v-container style="max-width: 1200px; min-height: 80vh;">
     <v-col>
-      <div class="d-flex justify-space-between my-10">
+      <div class="d-flex justify-space-between my-2">
         <h2 class="">Store Location</h2>
         <div class="d-flex flex-column align-end">
           <p class="mb-0" :style="`font-size: ${resFontSize}; text-align: right;`">158-09B Norther blvd, Flushing 11358</p>

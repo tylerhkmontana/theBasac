@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2><v-icon class="pb-1" color="black">mdi-check</v-icon> {{ this.currCategory }}</h2>
+    <h2><v-icon class="pb-1" color="black">mdi-silverware-fork-knife</v-icon> {{ this.currCategory }}</h2>
     <v-col cols="12">
       <v-row> 
         <v-col class="d-flex justify-center" :cols="resColSize" v-for="item in currItems" :key="item._id" >

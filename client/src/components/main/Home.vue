@@ -29,12 +29,12 @@
     <v-container class="pa-10" fluid>
 
       <p class="text-center mb-10 font-weight-bold" :style="`font-size: ${resTitleFont}`">
-        MENU <v-icon class="pb-2" :size="resTitleFont" color="black">mdi-silverware-fork-knife</v-icon>
+        MENU <v-icon class="pb-2" :size="resTitleFont" color="black">mdi-clipboard-text</v-icon>
       </p>
-      <p class="text-center" :style="`font-size: ${resFontSize};`"><strong>Store Hours</strong><br>MON-SUN 11:00 AM ~ 11:00 PM</p>
+      <p class="text-center" :style="`font-size: ${resFontSize};`"><strong class="orange--text">Store Hours</strong><br>MON-SUN 11:00 AM ~ 11:00 PM</p>
       <v-row class="my-7" v-for="category in menu" :key="category._id">
         <p class="ma-0 font-weight-bold" :style="`font-size: ${resCategoryFont};`">
-          <v-icon class="pb-1" color="black" :size="resCategoryFont">mdi-check</v-icon> 
+          <v-icon class="pb-1" color="black" :size="resCategoryFont">mdi-silverware-fork-knife</v-icon> 
           {{ category.categoryName }}
         </p>
         <v-col cols="12">
@@ -44,7 +44,7 @@
                 <span :style="`font-size: ${resFontSize}; color: orange;`" class="font-weight-bold" color="orange">{{ item.kName }}</span>
                 <span :style="`font-size: ${resSmallFontSize};`">{{ item.eName }}</span>
               </div>
-              <span :style="`font-size: ${resFontSize};`" dark>$ {{ item.price }}</span>
+              <span :style="`font-size: ${resFontSize};`" dark>{{ item.price }}</span>
             </v-col>
           </v-row>
         </v-col>
