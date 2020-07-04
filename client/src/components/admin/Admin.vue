@@ -1,5 +1,5 @@
 <template>
-  <v-container class="orange lighten-2" fluid style="height: 100%;">
+  <v-container class="blue-grey darken-1" fluid style="height: 100%;">
     <router-view></router-view>
   </v-container>  
 </template>

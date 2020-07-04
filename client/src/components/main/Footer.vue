@@ -1,5 +1,5 @@
 <template>
-  <v-footer class="pa-0" app height="auto" color="orange lighten-2" absolute>
+  <v-footer class="pa-0" height="auto" color="orange lighten-2">
     <v-col class="white--text d-flex flex-column align-start" :style="`font-size: ${resFontSize};`">
       &copy;The Basac II Inc. 2020
       <a class="white--text" href="https://github.com/tylerhkmontana" style="text-decoration: none;" target="_blank">

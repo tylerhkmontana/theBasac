@@ -17,6 +17,12 @@ export default {
   addItem(item) {
     return api.post("/api/item/add", item, { headers: authHeader() })
   },
+  updateItem(newInfo) {
+    return api.put("/api/item/update", newInfo, { headers: authHeader() })
+  },
+  updateOrder(itemOrder) {
+    return api.put("/api/item/update/order", itemOrder, { headers: authHeader() })
+  },
   deleteItems(items) {
     return api.delete("/api/item/delete", { headers: authHeader(), data: items })
   }

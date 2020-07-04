@@ -1,9 +1,10 @@
 <template>
   <div class="home">
 
-    <v-carousel cycle show-arrows-on-hover hide-delimiter-background height="auto">
+    <v-carousel cycle show-arrows-on-hover hide-delimiter-background hide-delimiters height="auto">
       <v-carousel-item v-for="(src, i) in getSlideSrc" :key="i">
-        <v-img :aspect-ratio="16/9" :src="src" max-height="500px"></v-img>
+        <v-img :aspect-ratio="16/9" :src="src" max-height="500px">
+        </v-img>
       </v-carousel-item>
     </v-carousel>
 

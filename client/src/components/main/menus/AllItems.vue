@@ -51,7 +51,7 @@ export default {
     },
     resFoodCardWidth() {
       if(this.windowWidth < 700) {
-        return '50vw'
+        return '40vw'
       } else {
         return '280'
       }

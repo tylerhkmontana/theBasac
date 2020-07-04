@@ -4,6 +4,7 @@
     <v-row>
 
       <v-col class="py-3 px-5 d-flex flex-column transparent" :cols="resColSize">
+        <h1 class="white--text text-center font-weight-light">Add Item</h1>
         <v-file-input 
           dark 
           label="attach image" 
@@ -30,13 +31,23 @@
           label="description(optional)" 
           rows="1" 
           auto-grow v-model="newItem.description"></v-textarea>
-        <v-btn dark outlined @click="addItem">Add Item</v-btn>
+        <v-btn dark outlined @click="addItem">Add</v-btn>
       </v-col>
 
       <v-col class="d-flex flex-column" height="100%" :cols="resColSize">
         <h1 class="white--text text-center font-weight-light">Delete Item</h1>
-        <v-combobox :items="getItemNames" dark multiple chips v-model="selectedItems"></v-combobox>
+        <v-combobox :items="getItemNames" dark multiple chips v-model="selectedItemsDelete"></v-combobox>
         <v-btn depressed outlined dark @click="deleteItems">Delete</v-btn>
+      </v-col>
+
+      <v-col class="py-3 px-5 d-flex flex-column transparent" :cols="resColSize">
+        <h1 class="white--text text-center font-weight-light">{{ updateMode }}</h1>
+        <v-switch :label="`Mode: ${updateMode}`" v-model="orderUpdate" @change="resetFields" dark></v-switch>
+        <v-select :items="getItemNames" v-model="newItemInfo.selectedItem" @change="setItemInfo" label="select item to update" dark :disabled="orderUpdate"></v-select>
+        <v-text-field label="price" type="number" v-model="newItemInfo.price" dark :disabled="orderUpdate"></v-text-field>
+        <v-file-input label="item picture" v-model="newItemInfo.file" dark :disabled="orderUpdate"></v-file-input>
+        <v-combobox :items="getItemNames" dark multiple chips v-model="selectedItemsUpdate" label="select items in desired order" :disabled="!orderUpdate"></v-combobox>
+        <v-btn dark outlined @click="updateItemInfo">Update</v-btn>
       </v-col>
 
       <v-col class="d-flex justify-center" :cols="resColSize" v-for="item in getItems" :key="item._id" >
@@ -47,6 +58,7 @@
         :foodInfo="item"/>
       </v-col>
 
+      
     </v-row>
   </v-col>
 </template>
@@ -68,7 +80,16 @@ export default {
         file: null,
         category: this.$route.params.category
       },
-      selectedItems: null
+      selectedItemsDelete: null,
+      selectedItemsUpdate: null,
+      updateItemModal: false,
+      newItemInfo: {
+        _id: null,
+        price: null,
+        file: null,
+        selectedItem: null
+      },
+      orderUpdate: false
     }
   },
   components: {
@@ -83,6 +104,9 @@ export default {
     },
     getItemNames() {
       return this.items.map(i => (i.eName))
+    },
+    updateMode() {
+      return this.orderUpdate ? "Update Order" : "Update Item"
     },
     resColSize() {
       if(this.windowWidth < 700) {
@@ -124,7 +148,7 @@ export default {
     },
     async deleteItems() {
       const targetItems = {
-        items: this.selectedItems,
+        items: this.selectedItemsDelete,
         categoryId: this.$route.params.category
       }
       try {
@@ -136,6 +160,41 @@ export default {
         this.errorMessage.push(err.response.data)
       }
       this.resetFields()
+    },
+    async updateItemInfo() {
+      if(this.orderUpdate) {
+        // Update Order
+        if(!!this.selectedItemsUpdate && this.selectedItemsUpdate.length === this.items.length) {
+          try {
+            this.items = (await menuService.updateOrder({ itemOrder: this.selectedItemsUpdate, categoryId: this.$route.params.category })).data
+          } catch(err) {
+            this.errorMessage.push(err.response.data)
+          }
+        } else {
+          this.errorMessage.push("Please select all the items")
+        }
+      } else {
+        // Update Item
+        let formData = new FormData
+
+        formData.append('file', this.newItemInfo.file)
+        formData.set('price', this.newItemInfo.price)
+        formData.set('_id', this.newItemInfo._id  )
+        formData.set('itemOrder', this.selectedItemsUpdate)
+
+        try {
+          this.items = (await menuService.updateItem(formData)).data
+        } catch(err) {
+          this.errorMessage.push(err.response.data)
+        }
+      }
+
+      this.resetFields()
+    },
+    setItemInfo() {
+      const selectedItem = this.items.find(item => item["eName"] === this.newItemInfo.selectedItem)
+      this.newItemInfo.price = selectedItem.price
+      this.newItemInfo._id = selectedItem._id
     },
     formValidation() {
       const errors = []
@@ -159,7 +218,14 @@ export default {
       this.newItem.price = null
       this.newItem.description = ''
       this.newItem.file = null
-      this.selectedItems = null
+      this.selectedItemsDelete = null
+      this.newItemInfo = {
+          _id: null,
+          price: null,
+          file: null,
+          selectedItem: null
+      }
+      this.selectedItemsUpdate = null
     }
   },
   watch: {

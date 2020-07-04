@@ -6,7 +6,6 @@ import Home from '@/components/main/Home.vue'
 import Location from '@/components/main/Location.vue'
 import Menu from '@/components/main/menus/Menu.vue'
 import Items from '@/components/main/menus/Items.vue'
-import AllItems from '@/components/main/menus/AllItems.vue'
 
 import Admin from '@/components/admin/Admin.vue'
 import Management from '@/components/admin/Management.vue'
@@ -19,7 +18,7 @@ const routes = [
   { path: '/', component: Main, children: [
     { path: '', name: 'Home', component: Home },
     { path: '/menu', component: Menu, children: [
-      { path: '', name: 'AllItems', component: AllItems },
+      { path: '', redirect: '5efac84d69b5c9c17557d706' },
       { path: ':category', name: 'Items', component: Items}
     ] },
     { path: '/location', name: 'Location', component: Location },

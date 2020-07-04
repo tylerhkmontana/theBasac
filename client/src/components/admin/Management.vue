@@ -14,27 +14,30 @@
       <v-row :class="`d-flex ${responsiveDesign.manageButtons}`">
         <v-btn 
           class="my-5 mx-auto" 
-          color="red accent-4"
+          color="blue-grey darken-3"
           @click="manageCategory = true"
-          outlined
+          depressed
+          dark
         >
           MANAGE CATEGORY
         </v-btn>
 
         <v-btn 
           class="my-5 mx-auto" 
-          color="red accent-4"
+          color="blue-grey darken-3"
           @click="manageSlides = true"
-          outlined
+          depressed
+          dark
         >
           MANAGE SLIDES
         </v-btn>
 
         <v-btn 
           class="my-5 mx-auto" 
-          color="red accent-4"
+          color="blue-grey darken-3"
           @click="manageAlert = true"
-          outlined
+          depressed
+          dark
         >
           MANAGE Alert
         </v-btn>
@@ -44,7 +47,7 @@
 
     <!-- Manage Category Dialogue -->
     <v-dialog v-model="manageCategory" :max-width="responsiveDesign.dialogWidth" dark>
-      <v-container class="orange">
+      <v-container class="blue-grey">
         <h2 class="text-center white--text">Manage Category</h2>
         <p class="text-center red--text mx-5">{{ this.error }}</p>
         <v-row class="d-flex justify-center">
@@ -68,7 +71,7 @@
 
     <!-- Manage Slides Dialogue -->
     <v-dialog v-model="manageSlides" :max-width="responsiveDesign.dialogWidth" dark>
-      <v-container class="orange">
+      <v-container class="blue-grey">
         <h2 class="text-center white--text">Manage Slides</h2>
         <p class="text-center red--text mx-5">{{ this.error }}</p>
         <v-row class="d-flex justify-center">
@@ -92,7 +95,7 @@
 
     <!-- Manage Alert Dialogue -->
     <v-dialog v-model="manageAlert" :max-width="responsiveDesign.dialogWidth" dark>
-      <v-container class="orange">
+      <v-container class="blue-grey">
         <h2 class="text-center white--text">Manage Alert</h2>
         <p class="text-center red--text mx-5">{{ this.error }}</p>
         <v-row class="d-flex flex-column justify-center">

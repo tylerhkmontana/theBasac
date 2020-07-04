@@ -61,9 +61,6 @@ export default {
         return '14px'
       }
     },
-  },
-  methods: {
-    
   }
 }
 </script>

@@ -4,11 +4,10 @@ const { ensureAuthorized } = require("../configs/jwt.config")
 const Category = require("../models/Category")
 const Item = require("../models/Item")
 
-
-router.get("/" ,async (req, res) => {
+router.get("/", async (req, res) => {
   try {
-    const menu = await Category.find({})
-    res.status(200).json(menu)
+    const briefMenu = await Category.find({}).select('_id categoryName items.eName items.kName items.price')
+    res.status(200).json(briefMenu)
   } catch(err) {
     console.log(err)
     res.status(500).send("Internal Server Error")
